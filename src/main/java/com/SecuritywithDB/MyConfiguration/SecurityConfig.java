@@ -35,7 +35,11 @@ public class SecurityConfig {
 
 				.authorizeHttpRequests(auth -> {
 					auth.requestMatchers("/", "/public").permitAll();
-					auth.requestMatchers("/secretpoint").hasAuthority("Admin");
+					auth.requestMatchers("/secretpoint").hasAuthority("USER");
+					auth.requestMatchers("/admin").hasAnyAuthority("ADMIN");
+					auth.requestMatchers("/superadmin").hasAnyAuthority("ADMIN","SUPERADMIN");
+					auth.requestMatchers("/test").hasAnyAuthority("READER","WRITER");
+					
 					auth.anyRequest().authenticated();
 
 				})
